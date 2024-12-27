@@ -37,7 +37,7 @@ header, main {
 }
 
 header {
-    align-items: center;            /* Vertical alignment for flex. */
+    align-items: center;                /* Vertical alignment for flex. */
     justify-content: space-evenly;      /* Horizontal alignment for flex. */
     align-content: center;
     height: 10%;

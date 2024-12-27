@@ -2,7 +2,7 @@ SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT=0;
 
 /* Create Customers table */
-CREATE OR REPLACE TABLE Customers (
+CREATE TABLE Customers (
     customerID INT NOT NULL AUTO_INCREMENT, 
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(50) NOT NULL,
@@ -26,7 +26,7 @@ VALUES
     ("Katy", "Perry", "455 Las Vegas Boulevard", "Las Vegas", "NV", "88901", "darkhorse@kp.com", 9805364561);
 
 /* Create Orders table */
-CREATE OR REPLACE TABLE Orders (
+CREATE TABLE Orders (
     orderID INT NOT NULL AUTO_INCREMENT, 
     orderDate DATE NOT NULL,            -- YYYYMMDD
     customerID INT,
@@ -45,7 +45,7 @@ VALUES
     (20240205, (SELECT customerID FROM Customers WHERE firstName="Katy" AND lastName="Perry"));
 
 /* Create Albums table */
-CREATE OR REPLACE TABLE Albums (
+CREATE TABLE Albums (
     albumID INT NOT NULL AUTO_INCREMENT, 
     name VARCHAR(50) NOT NULL,
     price DECIMAL(7,2) NOT NULL,
@@ -65,7 +65,7 @@ VALUES
     ("Banjo-Kazooie: Nuts & Bolts", 9.99, 20080513, 1);
 
 /* Create OrderItems table */
-CREATE OR REPLACE TABLE OrderItems (
+CREATE TABLE OrderItems (
     orderItemID INT NOT NULL AUTO_INCREMENT, 
     quantity INT NOT NULL,
     taxes DECIMAL(6,2) NOT NULL,
@@ -93,7 +93,7 @@ VALUES
     (SELECT albumID FROM Albums WHERE name="Banjo-Kazooie: Nuts & Bolts"));
 
 /* Create Composers table */
-CREATE OR REPLACE TABLE Composers (
+CREATE TABLE Composers (
     composerID INT NOT NULL AUTO_INCREMENT, 
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(50) NOT NULL,
@@ -111,7 +111,7 @@ VALUES
     ("Grant", "Kirkhope");
 
 /* Create Songs table */
-CREATE OR REPLACE TABLE Songs (
+CREATE TABLE Songs (
     songID INT NOT NULL AUTO_INCREMENT,
     track INT NOT NULL,
     name VARCHAR(50) NOT NULL,
