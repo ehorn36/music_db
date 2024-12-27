@@ -1,0 +1,139 @@
+<!-- orderItems.hbs -->
+
+{{!-- 
+Citation for the orderItems.hbs file
+Date: 3/1/24
+Based on the code provided in CS 340 // nodejs_starter_app
+This code was copied and modified for CRUD operations
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+--}}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Delete --}}
+<div>
+    <h2>OrderItems Table:</h2>
+     <h3 style="color:#b62525">Note - refresh browser after deleting a table row to see results</h3>
+    <table id="orderItems-table">
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.orderItems.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print each field, in order --}}
+            {{#each data.orderItems}}
+            <tr data-value={{this.orderItemID}}>
+                <td>{{this.orderItemID}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.taxes}}</td>
+                <td>{{this.returned}}</td>
+                <td>{{this.orderID}}</td>
+                <td>{{this.albumID}}</td>               
+                <td><button onclick="deleteOrderItem({{this.orderItemID}})" class="delete">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_orderItem.js"></script>
+</div>
+
+ {{!-- HTML form to add an orderItem --}}
+ <div>
+    <h2>Add an OrderItem:</h2>
+    <p>To add an orderItem, please enter the required information below and click submit.</p>
+    <form id="add-orderItem-form" method="POST" action="/add-orderItem-form">
+        <label for="input-quantity">quantity: </label>
+        <input type="text" name="input-quantity" id="input-quantity" required>
+        
+        <label for="input-taxes">taxes: </label>
+        <input type="text" name="input-taxes" id="input-taxes" required>
+
+        <label for="input-returned">returned: </label>
+        <select name="input-returned" id="input-returned">
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select required>
+
+        {{!-- Dynamic select box for orderID --}}
+        <label for="input-orderID">orderID: </label>
+        <select name="input-orderID" id="input-orderID">
+            <option value="test">Select an Order</option>
+            {{#each data.orders}}
+            <option value="{{this.orderID}}">{{this.orderID}}</option>
+            {{/each}}
+        </select>
+
+        {{!-- Dynamic select box for orderID --}}
+        <label for="input-albumID">albumID: </label>
+        <select name="input-albumID" id="input-albumID">
+            <option value="test">Select an Album</option>
+            {{#each data.albums}}
+            <option value="{{this.albumID}}">albumID: {{this.albumID}} - {{this.name}}</option>
+            {{/each}}
+        </select>
+
+        <input class="submit" type="submit">
+
+    </form>
+</div>
+
+ {{!-- HTML form to update an orderItem --}}
+ <div>
+    <h2>Update an OrderItem:</h2>
+    <p>To update an orderItem, please enter the required information below and click submit.</p>
+    <form id="update-orderItem-form" method="POST" action="/update-orderItem-form">
+
+        {{!-- Dynamic select box for orderItemID --}}
+        <label for="update-orderItemID">orderItemID: </label>
+        <select name="update-orderItemID" id="update-orderItemID">
+            <option value="test">Select an OrderItem</option>
+            {{#each data.orderItems}}
+            <option value="{{this.orderItemID}}">{{this.orderItemID}}</option>
+            {{/each}}
+        </select required>
+
+        <label for="update-quantity">quantity: </label>
+        <input type="text" name="update-quantity" id="update-quantity" required>
+
+        <label for="update-taxes">taxes: </label>
+        <input type="text" name="update-taxes" id="update-taxes" required>
+
+        <label for="update-returned">returned: </label>
+        <input type="text" name="update-returned" id="update-returned" required>
+
+
+        {{!-- Dynamic select box for orderID --}}
+        <label for="update-orderID">orderID: </label>
+        <select name="update-orderID" id="update-orderID" required>
+            <option value="test">Select an Order</option>
+            {{#each data.orders}}
+            <option value="{{this.orderID}}">{{this.orderID}}</option>
+            {{/each}}
+        </select>
+
+        {{!-- Dynamic select box for albumID --}}
+        <label for="update-albumID">albumID: </label>
+        <select name="update-albumID" id="update-albumID" required>
+            <option value="test">Select an Album</option>
+            {{#each data.albums}}
+            <option value="{{this.albumID}}">albumID: {{this.albumID}} - {{this.name}}</option>
+            {{/each}}
+        </select>
+        
+        <input type="submit" class="submit">
+
+    </form>
+</div>

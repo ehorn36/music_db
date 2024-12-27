@@ -1,0 +1,135 @@
+<!-- songs.hbs -->
+
+{{!-- 
+Citation for the songs.hbs file
+Date: 3/1/24
+Based on the code provided in CS 340 // nodejs_starter_app
+This code was copied and modified for CRUD operations
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+--}}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Delete --}}
+<div>
+    <h2>Songs Table:</h2>
+    <table id="songs-table">
+    <h3 style="color:#b62525">Note - refresh browser after deleting a table row to see results</h3>
+
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.songs.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print each field, in order --}}
+            {{#each data.songs}}
+            <tr data-value={{this.songID}}>
+                <td>{{this.songID}}</td>
+                <td>{{this.track}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.length}}</td>
+                <td>{{this.composerID}}</td>
+                <td>{{this.albumID}}</td>
+                
+                <td><button onclick="deleteSong({{this.songID}})" class="delete">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_song.js"></script>
+</div>
+
+{{!-- HTML form to add a song --}}
+<div>
+    <h2>Add a Song:</h2>
+    <p>To add a song, please enter the required information below and click submit.</p>
+    <form id="add-song-form" method="POST" action="/add-song-form">
+
+        <label for="input-track">track: </label>
+        <input type="text" name="input-track" id="input-track" required>
+        
+        <label for="input-name">name: </label>
+        <input type="text" name="input-name" id="input-name" required>
+
+        <label for="input-length">length: </label>
+        <input type="text" name="input-length" id="input-length" required>
+
+        {{!-- Dynamic select box for composerID --}}
+        <label for="input-composerID">composerID: </label>
+        <select name="input-composerID" id="input-composerID">
+            <option value="test">Select a Composer</option>
+            {{#each data.composers}}
+            <option value="{{this.composerID}}">[{{this.composerID}}] - {{this.firstName}} {{this.lastName}}</option>
+            {{/each}}
+        </select>
+
+        {{!-- Dynamic select box for albumID --}}
+        <label for="input-albumID">albumID: </label>
+        <select name="input-albumID" id="input-albumID">
+            <option value="test">Select an Album</option>
+            {{#each data.albums}}
+            <option value="{{this.albumID}}">[{{this.albumID}}] - {{this.name}}</option>
+            {{/each}}
+        </select>
+
+        <input type="submit" class="submit">
+
+    </form>
+</div>
+
+{{!-- HTML form to update a song --}}
+<div>
+    <h2>Update a Song:</h2>
+    <p>To update a song, please enter the required information below and click submit.</p>
+    <form id="update-song-form" method="POST" action="/update-song-form">
+
+        {{!-- Dynamic select box for songID --}}
+        <label for="update-songID">songID: </label>
+        <select name="update-songID" id="update-songID">
+            <option value="test">Select a Song</option>
+            {{#each data.songs}}
+            <option value="{{this.songID}}">[{{this.songID}}] - {{this.name}}</option>
+            {{/each}}
+        </select required>
+
+        <label for="update-track">track: </label>
+        <input type="text" name="update-track" id="update-track" required>
+
+        <label for="update-length">length: </label>
+        <input type="text" name="update-length" id="update-length" required>
+
+        {{!-- Dynamic select box for composerID --}}
+        <label for="update-composerID">composerID: </label>
+        <select name="update-composerID" id="update-composerID">
+            <option value="test">Select a Composer</option>
+            {{#each data.composers}}
+            <option value="{{this.composerID}}">[{{this.composerID}}] - {{this.firstName}} {{this.lastName}}</option>
+            {{/each}}
+        </select>
+
+        {{!-- Dynamic select box for albumID --}}
+        <label for="update-albumID">albumID: </label>
+        <select name="update-albumID" id="update-albumID">
+            <option value="test">Select an Album</option>
+            {{#each data.albums}}
+            <option value="{{this.albumID}}">[{{this.albumID}}] - {{this.name}}</option>
+            {{/each}}
+        </select>
+        
+        <input type="submit" class="submit">
+
+    </form>
+</div>

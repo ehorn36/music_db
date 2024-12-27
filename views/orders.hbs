@@ -1,0 +1,133 @@
+<!-- orders.hbs -->
+
+{{!-- 
+Citation for the orders.hbs file
+Date: 3/1/24
+Based on the code provided in CS 340 // nodejs_starter_app
+This code was copied and modified for CRUD operations
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+
+Additional citation: 
+'If helper' video explaining Express Handlebars conditional statements
+Source URL: https://youtu.be/rP45kDBlx9k?si=x2EIDC5sdZJQLPa7
+--}}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Delete --}}
+<div>
+    <h2>Orders Table:</h2>
+    <table id="orders-table">
+         <h3 style="color:#b62525">Note - refresh browser after deleting a table row to see results</h3>
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.orders.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print each field, in order --}}
+            {{#each data.orders}}
+            <tr data-value={{this.orderID}}>
+                <td>{{this.orderID}}</td>
+                <td>
+                    <date>{{this.orderDate}}</date>
+                </td>
+
+
+                {{!-- If customerID is not NULL, else print "NULL"  --}}
+                {{#if this.customerID}}
+                    <td>{{this.customerID}}</td>
+                {{else}}
+                    <td>NULL</td>
+                {{/if}}
+
+                {{!-- If firstName is not NULL, else print "---"  --}}
+                {{#if this.firstName}}
+                    <td>{{this.firstName}}</td>
+                {{else}}
+                    <td>---</td>
+                {{/if}}
+
+                {{!-- If lastName is not NULL, else print "---"  --}}
+                {{#if this.lastName}}
+                    <td>{{this.lastName}}</td>
+                {{else}}
+                    <td>---</td>
+                {{/if}}
+
+                <td><button onclick="deleteOrder({{this.orderID}})"class="delete">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_order.js"></script>
+</div>
+
+ {{!-- HTML form to add an order --}}
+<div>
+    <h2>Add an Order:</h2>
+    <p>To add an order, please enter the required information below and click submit.</p>
+    <form id="add-order-form" method="POST" action="/add-order-form">
+
+        <label for="input-orderDate">orderDate: </label>
+        <input type="date" name="input-orderDate" id="input-orderDate" required>
+        
+        {{!-- Dynamic select box for customerID --}}
+        <label for="input-customerID">customerID: </label>
+        <select name="input-customerID" id="input-customerID" required>
+            <option value="NULL">Select a Customer</option>
+            <option value="NULL">[N/A] - No customerID</option>
+            {{#each data.customers}}
+            <option value="{{this.customerID}}">[{{this.customerID}}] - {{this.firstName}} {{this.lastName}}</option>
+            {{/each}}
+        </select>
+
+        <input class="submit" type="submit">
+
+    </form>
+</div>
+
+    {{!-- HTML form to update an order --}}
+<div>
+    <h2>Update an Order:</h2>
+    <p>To update an order, please enter the required information below and click submit.</p>
+    <form id="update-order-form" method="POST" action="/update-order-form">
+
+        {{!-- Dynamic select box for orderID --}}
+        <label for="update-orderID">orderID: </label>
+        <select name="update-orderID" id="update-orderID" required>
+            <option value="NULL">Select an Order</option>
+            {{#each data.orders}}
+            <option value="{{this.orderID}}">{{this.orderID}}</option>
+            {{/each}}
+        </select>
+
+        <label for="update-date">orderDate: </label>
+        <input type="date" name="update-orderDate" id="update-orderDate" required>
+        
+        {{!-- Dynamic select box for customerID --}}
+        <label for="update-customerID">customerID: </label>
+        <select name="update-customerID" id="update-customerID" required>
+            <option value="NULL">Select a Customer</option>
+            <option value="NULL">[N/A] - No customerID</option>
+            {{#each data.customers}}
+            <option value="{{this.customerID}}">[{{this.customerID}}] - {{this.firstName}} {{this.lastName}}</option>
+            {{/each}}
+        </select>
+
+        <input class="submit" type="submit">
+        
+    </form>
+</div>  

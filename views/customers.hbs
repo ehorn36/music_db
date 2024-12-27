@@ -1,0 +1,135 @@
+<!-- customers.hbs -->
+
+{{!-- 
+Citation for the customers.hbs file
+Date: 3/1/24
+Based on the code provided in CS 340 // nodejs_starter_app
+This code was copied and modified for CRUD operations
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+--}}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Delete --}}
+<div>
+    <h2>Customers Table:</h2>
+    <table id="customers-table">
+    <h3 style="color:#b62525">Note - refresh browser after deleting a table row to see results</h3>
+
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print each field, in order --}}
+            {{#each data}}
+            <tr data-value={{this.customerID}}>
+                <td>{{this.customerID}}</td>
+                <td>{{this.firstName}}</td>
+                <td>{{this.lastName}}</td>
+                <td>{{this.street}}</td>
+                <td>{{this.city}}</td>
+                <td>{{this.state}}</td>                 
+                <td>{{this.postalCode}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.phone}}</td>
+                <td><button onclick="deleteCustomer({{this.customerID}})" class="delete">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_customer.js"></script>
+</div>
+
+ {{!-- HTML form to add a customer --}}
+ <div >
+    <h2>Add a Customer:</h2>
+    <p>To add a customer, please enter the required information below and click submit.</p>
+    <form id="add-customer-form" method="POST" action="/add-customer-form">
+
+        <label for="input-firstName">firstName: </label>
+        <input type="text" name="input-firstName" id="input-firstName" required>
+        
+        <label for="input-lastName">lastName: </label>
+        <input type="text" name="input-lastName" id="input-lastName" required>
+
+        <label for="input-street">street: </label>
+        <input type="text" name="input-street" id="input-street" required>
+
+        <label for="input-city">city: </label>
+        <input type="text" name="input-city" id="input-city" required>
+
+        <label for="input-state">state: </label>
+        <input type="text" name="input-state" id="input-state" required>
+
+        <label for="input-postalCode">postalCode: </label>
+        <input type="text" name="input-postalCode" id="input-postalCode" required>
+
+        <label for="input-email">email: </label>
+        <input type="text" name="input-email" id="input-email" required>
+
+        <label for="input-phone">phone: </label>
+        <input type="text" name="input-phone" id="input-phone" required>
+
+        <input class="submit" type="submit">
+
+    </form>
+</div>
+
+ {{!-- HTML form to update a customer --}}
+<div>
+    <h2>Update a Customer:</h2>
+    <p>To update a customer, please enter the required information below and click submit.</p>
+    <form id="update-customer-form" method="POST" action="/update-customer-form">
+
+    {{!-- Dynamic select box for customerID --}}
+        <label for="update-customerID">customerID: </label>
+        <select name="update-customerID" id="update-customerID">
+            <option value="test">Select a Customer</option required>
+            {{#each data}}
+            <option value="{{this.customerID}}">[{{this.customerID}}] - {{this.firstName}} {{this.lastName}}</option>
+            {{/each}}
+        </select>
+
+        <label for="update-firstName">firstName: </label>
+        <input type="text" name="update-firstName" id="update-firstName">
+        
+        <label for="update-lastName">lastName: </label>
+        <input type="text" name="update-lastName" id="update-lastName">
+
+        <label for="update-street">street: </label>
+        <input type="text" name="update-street" id="update-street">
+
+        <label for="update-city">city: </label>
+        <input type="text" name="update-city" id="update-city">
+
+        <label for="update-state">state: </label>
+        <input type="text" name="update-state" id="update-state">
+
+        <label for="update-postalCode">postalCode: </label>
+        <input type="text" name="update-postalCode" id="update-postalCode">
+
+        <label for="update-email">email: </label>
+        <input type="text" name="update-email" id="update-email">
+
+        <label for="update-phone">phone: </label>
+        <input type="text" name="update-phone" id="update-phone">
+
+        <input type="submit" class="submit" >
+
+    </form>
+</div>
+

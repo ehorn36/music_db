@@ -1,0 +1,106 @@
+<!-- albums.hbs -->
+
+{{!-- 
+Citation for the albums.hbs file
+Date: 3/1/24
+Based on the code provided in CS 340 // nodejs_starter_app
+This code was copied and modified for CRUD operations
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
+--}}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Delete --}}
+<div>
+    <h2>Albums Table:</h2>
+    <table id="albums-table">
+        <h3 style="color:#b62525">Note - refresh browser after deleting a table row to see results</h3>
+
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print each field, in order --}}
+            {{#each data}}
+            <tr data-value={{this.albumID}}>
+                <td>{{this.albumID}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.releaseDate}}</td>
+                <td>{{this.stock}}</td>           
+                <td><button onclick="deleteAlbum({{this.albumID}})" class="delete">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_album.js"></script>
+</div>
+
+{{!-- HTML form to add an album --}}
+<div>
+    <h2>Add an Album:</h2>
+    <p>To add an album, please enter the required information below and click submit.</p>
+    <form id="add-album-form" method="POST" action="/add-album-form">
+
+        <label for="input-name">name: </label>
+        <input type="text" name="input-name" id="input-name" required>
+
+        <label for="input-price">price: </label>
+        <input type="text" name="input-price" id="input-price" required>
+        
+        <label for="input-releaseDate">releaseDate: </label>
+        <input type="date" name="input-releaseDate" id="input-releaseDate" required>
+
+        <label for="input-stock">stock: </label>
+        <input type="text" name="input-stock" id="input-stock" required>
+
+        <input type="submit" class="submit">
+
+    </form>
+</div>
+
+ {{!-- HTML form to update an album --}}
+ <div>
+    <h2>Update an Album:</h2>
+    <p>To update an album, please enter the required information below and click submit.</p>
+    <form id="update-album-form" method="POST" action="/update-album-form">
+
+        {{!-- Dynamic select box for albumID --}}
+        <label for="update-albumID">albumID</label>
+        <select name="update-albumID" id="update-albumID">
+            <option value="test">Select an Album</option>
+            {{#each data}}
+            <option value="{{this.albumID}}">[{{this.albumID}}] - {{this.name}}</option>
+            {{/each}}
+        </select required>
+
+        <label for="update-name">name: </label>
+        <input type="text" name="update-name" id="update-name" required>
+
+        <label for="update-price">price: </label>
+        <input type="text" name="update-price" id="update-price" required>
+
+        <label for="update-releaseDate">releaseDate: </label>
+        <input type="date" name="update-releaseDate" id="update-releaseDate" required>
+
+        <label for="update-stock">stock: </label>
+        <input type="text" name="update-stock" id="update-stock" required>
+    
+        <input type="submit" class="submit">
+
+    </form>
+</div>
